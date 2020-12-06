@@ -1,0 +1,98 @@
+************QUESTION******************
+Given a list of numbers nums and a number k, return whether any two numbers from the list add up to k. You may not use the same element twice.
+
+Note: Numbers can be negative or 0.
+
+Constraints
+
+n ≤ 100,000 where n is the length of nums
+Example 1
+Input
+nums = [35, 8, 18, 3, 22]
+k = 11
+Output
+True
+Explanation
+8 + 3 = 11
+
+Example 2
+Input
+nums = [10, 36, 22, 14]
+k = 4
+Output
+False
+Explanation
+No two numbers in this list add up to 4.
+
+Example 3
+Input
+nums = [24, 10, 11, 4]
+k = 15
+Output
+True
+Explanation
+11 + 4 = 15
+
+Example 4
+Input
+nums = [-22, 22, -11, 11]
+k = 0
+Output
+True
+Explanation
+-11 + 11 = 0
+
+Example 5
+Input
+nums = [15, 0, 3, 2]
+k = 15
+Output
+True
+Explanation
+15 + 0 = 15
+################################
+
+# THERE ARE TWO APPROACHES TO THIS PROBLEM
+
+# FIRST ONE (FIRST SORTING THE ARRAY AND USING BINARY SEARCH TO FIND THE DIFFERENCE)
+
+class Solution:
+    def solve(self, nums, k):
+        nums.sort()
+        n = len(nums)
+        for i in range(n):
+            if nums[i]>k:
+                continue
+            diff = k - nums[i]
+            j = 0
+            m = n-1
+            mid = 0
+            flag = 0
+            while j<=m:
+                mid = (j+m)//2
+                if nums[mid]<diff:
+                    j = mid + 1
+                elif nums[mid]>diff:
+                    m = mid - 1
+                elif nums[mid]==diff:
+                    flag = 1
+                    break
+            if mid!=i and flag == 1:
+                return True
+        return False
+        
+# TAKES O(nlogn) time
+
+#####SECOND APPROACH
+
+class Solution:
+    def solve(self, nums, k):
+        s = set()
+        n = len(nums)
+        for i in range(n):
+            if nums[i] in s:
+                return True
+            s.add(k-nums[i])
+        return False
+                    
+        
