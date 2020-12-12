@@ -1,0 +1,37 @@
+**********QUESTION*************
+Given a binary tree root, return the number of unique vertical lines that can be drawn such that every node has a line intersecting it. Each left child is angled at 45 degrees to its left, while the right child is angled at 45 degrees to the right.
+
+For example, root and root.left.right is on the same vertical line.
+
+Constraints
+
+n ≤ 100,000 where n is the number of nodes in root
+Example 1
+Input
+root = [1, [2, [3, null, null], null], [4, null, [5, null, null]]]
+
+Output
+5
+Explanation
+There's a unique vertical line over every node.
+************************************
+# class Tree:
+#     def __init__(self, val, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def solve(self, root):
+        list1 = []
+        node = root
+        flag = 0
+        def recurse(node,flag,list1):
+            if node:
+                if flag not in list1:
+                    list1.append(flag)
+                recurse(node.left,flag-1,list1)
+                recurse(node.right,flag+1,list1)
+        recurse(node,flag,list1)
+        return len(list1)
+            
+            
