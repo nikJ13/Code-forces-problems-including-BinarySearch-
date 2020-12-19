@@ -1,0 +1,71 @@
+*************QUESTION*********************
+Given a binary tree root, return the number of nodes that have both children and where the sum of one subtree is even and the sum of the other subtree is odd.
+
+Constraints
+
+n ≤ 100,000 where n is the number of nodes in root
+Example 1
+Input
+Visualize
+root = [1, [5, null, null], [3, [4, null, null], [7, null, null]]]
+
+Output
+2
+Explanation
+Nodes 1 and 3 meet the criteria.
+
+Example 2
+Input
+Visualize
+root = [1, [2, [3, null, null], null], null]
+Output
+0
+Explanation
+No node has both a left and a right child.
+
+LINK: https://binarysearch.com/room/Weekly-Contest-38-CNs3hGBp9j
+***********************************************
+# class Tree:
+#     def __init__(self, val, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def solve(self, root):
+        if not root:
+            return 0
+        node = root
+        sum1= 0
+        count = 0
+        def recurse(node,sum1,count):
+            if node.left and node.right:
+                #print("here")
+                left,countleft = recurse(node.left,sum1,count)
+                #print("between")
+                right,countright = recurse(node.right,sum1,count)
+                if (left%2==0 and right%2!=0) or (left%2!=0 and right%2==0):
+                    count += 1
+                sum1 += (left+right+node.val)
+                count += (countleft+countright)
+                #print("Sum is: ",sum1)
+                #print("Count is: ",count)
+                return sum1,count
+            else:
+                #print("reached end case")
+                #print("ok")
+                if node.left:
+                    l,cl = recurse(node.left,sum1,count)
+                    sum1 += l
+                    count += cl
+                if node.right:
+                    r,cr = recurse(node.right,sum1,count)
+                    sum1 += r
+                    count += cr
+                sum1 += node.val
+                #print("Sum is: ",sum1)
+                #print("Count is: ",count)
+                return sum1,count
+                
+        sum11,counter = recurse(node,sum1,count)
+        return counter
+***********WROTE IT ON MY OWN, THROUGH LONG PROCESS OF TRIAL N ERROR; SIMPLE RECURSION********************** 
