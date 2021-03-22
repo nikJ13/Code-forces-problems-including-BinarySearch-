@@ -1,0 +1,35 @@
+*************QUESTION**********************
+You are given a lowercase alphabet string s. Return all substrings in s where there is another substring in s at a different location that is an anagram. Return the list sorted in lexicographic order.
+
+Constraints
+
+1 ≤ n ≤ 100 where n is the length of s
+Example 1
+Input
+s = "aba"
+Output
+["a", "a", "ab", "ba"]
+Explanation
+We have "a" and "a" which are anagrams. Also, "ab" and "ba" are anagrams.
+***********************************************
+class Solution:
+    def solve(self, s):
+        dict1 = {}
+        ans = []
+        n = len(s)
+        temp = ''
+        t = ''
+        for i in range(n):
+            temp = ''
+            t = ''
+            for j in range(i,n):
+                temp = ''.join(sorted(temp+s[j]))
+                t = ''.join(t+s[j])
+                if len(dict1.get(temp,[]))==0:  // this function returns the value of the given key (which is "temp"); if the key is not present, then the key is given value as an empty list
+                    dict1[temp] = [t]
+                else:
+                    dict1[temp].append(t)
+        for k in dict1:
+            if len(dict1[k])!=1:
+                ans += dict1[k]
+        return sorted(ans)
