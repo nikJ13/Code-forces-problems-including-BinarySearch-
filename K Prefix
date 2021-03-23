@@ -1,0 +1,31 @@
+*************QUESTION*********************
+Given a list of integers nums and an integer k, return the maximum possible i where nums[0] + nums[1] + ...  + nums[i] ≤ k. Return -1 if no valid i exists.
+
+Constraints
+
+0 ≤ n ≤ 1,000 where n is the length of nums.
+-1,000 ≤ nums[i] ≤ 1,000
+0 ≤ k ≤ 10 ** 9
+Example 1
+Input
+nums = [3, -5, 4, 1, 6]
+k = 4
+Output
+3
+Explanation
+The largest i here is 3, since we have nums[0] + ... + nums[3] = 3 and if we added the next number (6) the sum would no longer be less than k.
+***********************************************
+class Solution:
+    def solve(self, nums, k):
+        temp = -1
+        if not nums:
+            return temp
+        sum1 = 0
+        n = len(nums)
+        for i in range(n):    # this loop finds the sum of every element before it and puts it in the array
+            sum1 += nums[i]
+            nums[i] = sum1
+        for i in range(n):    # this loop finds the sums that are less than or equal to k
+            if nums[i]<=k:
+                temp = i
+        return temp
