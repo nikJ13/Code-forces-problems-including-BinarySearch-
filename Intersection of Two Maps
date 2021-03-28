@@ -1,0 +1,72 @@
+***********QUESTION*******************
+You are given two-dimensional lists of integers a and b, both of which contains 0s and 1s. A 1 represents land and 0 represents water, so an island is a group of 1s that are neighboring whose perimeter is surrounded by water.
+
+Return the number of islands that exist in both a and b at the exact same coordinates.
+
+Constraints
+
+1 ≤ n * m ≤ 200,000 where n and m are the number of rows and columns in a and b
+Example 1
+Input
+a = [
+    [1, 0, 1],
+    [1, 0, 0],
+    [1, 0, 0]
+]
+b = [
+    [1, 0, 0],
+    [1, 0, 1],
+    [1, 0, 0]
+]
+Output
+1
+Explanation
+The top left island is shared in both a and b.
+
+Example 2
+Input
+a = [
+    [1, 1, 1],
+    [1, 1, 1],
+    [1, 1, 1]
+]
+b = [
+    [1, 1, 0],
+    [1, 0, 1],
+    [1, 0, 0]
+]
+Output
+0
+*****************************************
+class Solution:
+    def solve(self, a, b):
+        n = len(a)
+        m = len(a[0])
+        count = 0
+        for i in range(n):
+            for j in range(m):
+                if a[i][j]!=b[i][j]: # marking those cells that do not match with both the matrices as 2
+                    a[i][j] = 2
+                    
+        def recurse(a,x,y):
+            if x>=n or y>=m or x<0 or y<0:   # checking if the coordinates are out of boundary conditions
+                return 1
+            if a[x][y]==0 or a[x][y]==3:     # if the current cell of 'a' is zero (water) or already visited, then return True, as the islands are matching
+                return True
+            if a[x][y]==2:                   # if even one of the cells of an island is '2', this means there is a mismatch, hence, that island cannot be considered; thus return false
+                return False
+            a[x][y] = 3                      # if the current cell is not visited or not water or not a mismatch, that means it is '1', thus, changing its status to '3' indicates that it has been visited
+            e = recurse(a,x+1,y)
+            f = recurse(a,x,y+1)
+            g = recurse(a,x-1,y)
+            h = recurse(a,x,y-1)
+            return e&f&g&h                  # the above four statements show that the recurse function is called from all four neighbours of the current cell
+                                            # in the end, all the boolean values are returned by checking whether even one of them being False; this would ultimately determine if there is a single mismatch in one of the islands
+
+        for i in range(n):
+            for j in range(m):
+                if a[i][j]==1:          
+                    r = recurse(a,i,j) 
+                    if r==1:                # if the final value obtained from the recurse function is True, then the island can be counted as a matched one
+                        count += 1
+        return count
