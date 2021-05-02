@@ -1,0 +1,76 @@
+***********QUESTION*******************
+You are given a string s containing digits from 0 to 9. Return whether there is some arrangement where we can have one pair of the same digits and the rest of the numbers form any number of triples of the same digits.
+
+Constraints
+
+0 ≤ n ≤ 100,000 where n is the length of s
+Example 1
+Input
+s = "21112"
+Output
+true
+Explanation
+We can have "22" as the pair and "111" as a triple.
+
+Example 2
+Input
+s = "55"
+Output
+true
+Explanation
+We can have "55" as the pair and there's no triple.
+
+Example 3
+Input
+s = "111222"
+Output
+false
+Example 4
+Input
+s = "11111"
+Output
+true
+Example 5
+Input
+s = "22222222"
+Output
+true
+***********************************************
+PYTHON CODE: (53 ms)
+class Solution:
+    def solve(self, s):
+        dict1 = {-1:0}                # using dictionary to store frequencies of each character
+        for i in s:
+            if int(i) in dict1:
+                dict1[int(i)] += 1
+            else:
+                dict1[int(i)] = 1
+        count = 0
+        for j in dict1:
+            if dict1[j]%3!=0:
+                if (dict1[j]==2 and count==0) or ((dict1[j]-2)%3==0 and count==0):
+                    count = 1
+                elif (dict1[j]==2 and count==1) or (dict1[j]<2) or ((dict1[j]-2)%3!=0) or ((dict1[j]-2)%3==0 and count==1):
+                    return False
+        return count==1
+        
+C++ CODE: (25 ms)
+bool solve(string s) {
+    unordered_map<char,int> m;
+    for(char c: s){
+        m[c] ++;                   // using dictionary (also called map in cpp) to store frequencies of each character
+    }
+    int flag = 0;
+    for(auto i : m){
+        if(i.second%3==0){
+            continue;
+        }else if(flag==0 && i.second%3==2){
+            flag = 1;
+        }else if(flag==0 && i.second==2){
+            flag = 1;
+        }else{
+            return false;
+        }
+    }
+    return flag;
+}
