@@ -1,0 +1,44 @@
+**************QUESTION*******************
+Given a singly linked list node, return its reverse.
+
+Bonus: Can you do this in \mathcal{O}(1)O(1) space?
+
+Constraints
+
+n ≤ 100,000 where n is the number of nodes in node
+Example 1
+Input
+Visualize
+node = [1, 2, 3, 4]
+Output
+Visualize
+[4, 3, 2, 1]
+Example 2
+Input
+Visualize
+node = [0, 1]
+Output
+Visualize
+[1, 0]
+*********************************************
+# class LLNode:
+#     def __init__(self, val, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def solve(self, node):
+        if node==None:
+            return None
+        left = None
+        mid = node
+        right = node.next
+        while True:
+            if right==None:
+                mid.next = left
+                left=mid
+                break
+            mid.next = left
+            left = mid
+            mid = right
+            right = right.next
+        return left
