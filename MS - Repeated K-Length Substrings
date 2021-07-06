@@ -1,0 +1,41 @@
+*****************QUESTIONS****************************
+Given a string s and an integer k, return the number of k-length substrings that occur more than once in s.
+
+Constraints
+
+n ≤ 100,000 where n is the length of s.
+k ≤ 10
+Example 1
+Input
+s = "abcdabc"
+k = 3
+Output
+1
+Explanation
+"abc" occurs twice in the string
+
+Example 2
+Input
+s = "aaabbb"
+k = 2
+Output
+2
+Explanation
+Both "aa" and "bb" occurs twice.
+*******************************************************
+class Solution:
+    def solve(self, s, k):
+        count = 0
+        n = len(s)
+        dict1 = {}
+        for i in range(n-k+1):
+            if i==0:
+                dict1[s[i:i+k]] = 1
+            elif s[i:i+k] not in dict1:
+                dict1[s[i:i+k]] = 1
+            else:
+                dict1[s[i:i+k]] += 1
+        for k in dict1:
+            if dict1[k]>1:
+                count += 1
+        return count
