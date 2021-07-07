@@ -1,0 +1,31 @@
+*****************QUESTION*************************
+Given a string s, determine whether any anagram of s is a palindrome.
+
+Constraints
+
+n ≤ 100,000 where n is the length of s
+Example 1
+Input
+s = "carrace"
+Output
+True
+Explanation
+"carrace" should return true, since it can be rearranged to form "racecar", which is a palindrome.
+*****************************************************
+class Solution:
+    def solve(self, s):
+        n = len(s)
+        dict1 = Counter(s)
+        if n%2==0:
+            for k in dict1:
+                if dict1[k]%2!=0:
+                    return False
+            return True
+        else:
+            count = 0
+            for k in dict1:
+                if dict1[k]%2!=0 and count==1:
+                    return False
+                elif dict1[k]%2!=0 and count==0:
+                    count = 1
+            return True
