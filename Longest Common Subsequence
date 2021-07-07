@@ -1,0 +1,50 @@
+******************QUESTION**************************
+Given two strings a and b, return the length of their longest common subsequence.
+
+Constraints
+
+n ≤ 1,000 where n is the length of a
+m ≤ 1,000 where m is the length of b
+Example 1
+Input
+a = "abcvc"
+b = "bv"
+Output
+2
+Explanation
+bv is the longest common subsequence.
+
+Example 2
+Input
+a = "abc"
+b = "abc"
+Output
+3
+Example 3
+Input
+a = "abc"
+b = "def"
+Output
+0
+Example 4
+Input
+a = "binarysearch"
+b = "searchbinary"
+Output
+6
+********************************************************
+class Solution:
+    def solve(self, a, b):
+        n = len(a)
+        m = len(b)
+        dp = [[0 for i in range(n+1)] for k in range(m+1)]
+        for j in range(1,m+1):
+            for g in range(1,n+1):
+                if b[j-1]==a[g-1]:
+                    dp[j][g] = dp[j-1][g-1] + 1
+                else:
+                    dp[j][g] = max(dp[j-1][g],dp[j][g-1])
+        return dp[-1][-1]
+    
+    
+Watch: https://www.youtube.com/watch?v=ASoaQq66foQ
