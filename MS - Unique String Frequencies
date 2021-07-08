@@ -1,0 +1,33 @@
+****************QUESTION*********************
+Given a lowercase alphabet string s, return the minimum number of characters that we need to delete such that the frequency of each character occurs a unique number of times.
+
+Constraints
+
+n ≤ 100,000 where n is the length of s
+Example 1
+Input
+s = "aabb"
+Output
+1
+Explanation
+Both "a" and "b" occur twice, so we can remove say "a" once to make the frequencies unique.
+
+Example 2
+Input
+s = "abbccc"
+Output
+0
+Explanation
+The string already has unique frequencies for "a", "b" and "c": [1, 2, 3].
+***********************************************
+class Solution:
+    def solve(self, s):
+        dict1 = Counter(s)
+        uniques = set()
+        ans = 0
+        for k in dict1:
+            while dict1[k]>0 and dict1[k] in uniques:
+                dict1[k] -= 1
+                ans += 1
+            uniques.add(dict1[k])
+        return ans
