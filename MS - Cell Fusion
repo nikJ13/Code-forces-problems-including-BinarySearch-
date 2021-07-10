@@ -1,0 +1,35 @@
+*************************QUESTION****************************
+You are given a list of integers cells, representing sizes of different cells. In each iteration, the two largest cells a and b interact according to these rules:
+
+If a = b, they both die.
+Otherwise, the two cells merge and their size becomes floor((a + b) / 3).
+Return the size of the last cell or return -1 if there's no cell is remaining.
+
+Constraints
+
+n ≤ 100,000 where n is the length of cells
+Example 1
+Input
+cells = [10, 30, 30, 20]
+Output
+10
+Explanation
+In the first iteration, the two largest cells both have the size of 30 so they both die. In the second iteration, cells 10, and 20 merge to become 10.
+**********************************************
+# HEAPQ PYTHON LIBRARY HAS BEEN USED
+class Solution:
+    def solve(self, cells):
+        n = len(cells)
+        for i in range(n):
+            cells[i] = -cells[i]
+        heapify(cells)                  # here heap is made, which arranges the elements of the array in heap order
+        while n>1:
+            a,b = -heappop(cells),-heappop(cells)       # here, the heappop() function pops the smallest element in the heap; the order is accordingly adjusted
+            n -= 2
+            if a!=b:
+                heappush(cells,-((a+b)//3))             # here, the heappush() function pushes the element given as the second argument; the element is accordingly sorted
+                n += 1
+        if n==1:
+            return -cells[0]
+        else:
+            return -1
