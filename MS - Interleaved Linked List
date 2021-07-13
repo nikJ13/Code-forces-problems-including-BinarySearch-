@@ -1,0 +1,58 @@
+********************QUESTION********************************
+Given two linked lists l0 and l1, return the two linked lists interleaved, starting with l0. If there are leftover nodes in a linked list, they should be added to the end.
+
+Constraints
+
+n ≤ 100,000 where n is the number of nodes in l0
+m ≤ 100,000 where m is the number of nodes in l1
+Example 1
+Input
+Visualize
+l0 = [7, 8]
+l1 = [1, 2]
+Output
+Visualize
+[7, 1, 8, 2]
+Example 2
+Input
+Visualize
+l0 = [7, 8]
+l1 = [1]
+Output
+Visualize
+[7, 1, 8]
+******************************************************************
+# class LLNode:
+#     def __init__(self, val, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def solve(self, l0, l1):
+        if not l0:
+            return l1
+        elif not l1:
+            return l0
+        head = l0
+        a = l0
+        b = l1
+        temp1 = a.next
+        temp2 = b.next
+        count = 1
+        while temp1 and temp2:
+            a.next = b
+            a = b
+            if count%2!=0:
+                b = temp1
+                temp1 = temp1.next
+                count += 1
+            else:
+                b = temp2
+                temp2 = temp2.next
+                count += 1
+        if temp1==None:
+            a.next = b
+            b.next = temp2
+        elif temp2==None:
+            a.next = b
+            b.next = temp1
+        return head
