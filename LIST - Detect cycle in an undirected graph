@@ -1,0 +1,70 @@
+**************QUESTION**********************
+Given an undirected graph with V vertices and E edges, check whether it contains any cycle or not. 
+
+Example 1:
+
+Input:   
+
+Output: 1
+Explanation: 1->2->3->4->1 is a cycle.
+Example 2:
+
+Input: 
+
+Output: 0
+Explanation: No cycle in the graph.
+ 
+
+Your Task:
+You don't need to read or print anything. Your task is to complete the function isCycle() which takes V denoting the number of vertices and adjacency list as input parameters and returns a boolean value denoting if the undirected graph contains any cycle or not.
+ 
+
+Expected Time Complexity: O(V + E)
+Expected Space Complexity: O(V)
+ 
+
+Constraints:
+1 ≤ V, E ≤ 105
+*********************************************************
+####### USING DFS (RECURSION)
+class Solution:
+    
+    #Function to detect cycle in an undirected graph.
+	def isCycle(self, V, adj):
+		#Code here
+		visited = [0 for _ in range(V)]
+        def dfs(j,parent):
+            nonlocal visited
+            m = len(adj[j])
+            visited[j] = 1
+            for i in range(m):
+                if visited[adj[j][i]]==0:
+                    if dfs(adj[j][i],j):
+                        return True
+                elif parent!=adj[j][i]:
+                    return True
+            return False
+        p = dfs(0,-1)
+        if p:
+            return 1
+        else:
+            return 0
+
+####### USING BFS
+class Solution:
+    
+    #Function to detect cycle in an undirected graph.
+	def isCycle(self, V, adj):
+		#Code here
+		visited = [0 for _ in range(V)]
+        que = [(0,-1)]
+        visited[que[0][0]] = 1
+        while que:
+            a = que.pop(0)
+            for i in range(len(adj[a[0]])):
+                if visited[adj[a[0]][i]]!=1:
+                    visited[adj[a[0]][i]] = 1
+                    que.append((adj[a[0]][i],a[0]))
+                elif adj[a[0]][i]!=a[1]:
+                    return True
+        return False
