@@ -1,0 +1,16 @@
+***********************QUESTION**************************
+PRINT THE PERMUTATION COEFFICIENT FOR A GIVEN n,r
+***********************************************************
+###### USING DP
+n,r = map(int,input().split())
+dp = [[0 for _ in range(r+1)] 
+            for g in range(n+1)]
+for i in range(n+1):
+    for j in range(min(i,r)+1):
+        if j==0:
+            dp[i][j] = 1
+        else:
+            dp[i][j] = dp[i-1][j] + (j*dp[i-1][j-1])
+        # if j<r:
+        #     dp[i][j+1] = 0
+print(dp[-1][-1])
